@@ -23,7 +23,7 @@ train loss
 - model_training.ipynb: a Jupyter notebook to train the PyTorch AudioNet CNN on the preprocessed audio data
 - models.py: contains the AudioNet CNN and the VIL model class
 - preprocess_data.ipynb: a Jupyter notebook to preprocess the AudioMNIST data according to Becker et al.'s preprocessing steps for the AudioNet model
-- virtual_inspection_laver_implementation.ipynb: a Jupyter notebook to create instance-based explanations for a classification decision, utilizing a virtual inspection layer on the AudioNet model
+- virtual_inspection_layer_implementation.ipynb: a Jupyter notebook to create instance-based explanations for a classification decision, utilizing a virtual inspection layer on the AudioNet model
 - virtual_inspection_layers.py: contains all implemented VILs (DFT, STDFT, DCT, and DWT)
 
 ### Setup
@@ -33,18 +33,18 @@ Please note that this code is a prototype and thus **not** production-ready. The
 1. Clone repository and initialize with Python version 3.9
 2. Install dependencies using the requirements.txt (might happen automatically)
 3. Add cloned AudioMNIST repository (https://github.com/soerenab/AudioMNIST) to the project's root folder (or adjust data paths instead)
-4. To enable Captum's LRP calculation for complex values (like DFT), please navigate to its Propagation Rule class (captum.attr._utils.lrp_rules) and change torch.sign(outputs) to torch.sgn(outputs) in the _create_backward_hook_output method. If your Jupyter environment was already running, please restart it for the change to take effect.
+4. To enable Captum's LRP calculation for complex values (like DFT), please navigate to its Propagation Rule class and change torch.sign(outputs) to torch.sgn(outputs) in the _create_backward_hook_output method. You can quickly access the class by navigating into the captum.attr._utils.lrp_rules import in the virtual_inspection_layer_implementation.ipynb notebook. Please restart your Jupyter notebook for the change to take effect.
 
 ### Usage
 
 1. Preprocess data by running preprocess_data.ipynb (optional: skip and use provided test data for model validation)
 2. Train model by running model_training.ipynb (optional: skip and use provided model weights)
-3. Generate data transformation and model classification decision plots by running virtual_inspection_laver_implementation.ipynb
+3. Generate data transformation and model classification decision plots by running virtual_inspection_layer_implementation.ipynb
 
 ### Features
 
 - Specify spoken digit, speaker, and recording (or get random sample)
-- Specify data transformation and model classification decision format (either averaged convolution layer output, DFT, STDFT, DCT, or DWT)
+- Specify data transformation and model classification decision representation (either averaged convolution layer output, DFT, STDFT, DCT, or DWT)
 - Define custom range for the generated plots (only fully implemented for DFT and DCT)
-- Audibly verify reconstruction of temporarily transformed audio input
-- Verify VIL model(s) by evaluating it on the test set
+- Audibly verify correct reconstruction of temporarily transformed audio input
+- Verify VIL model(s) by evaluating it using the original model's test set
